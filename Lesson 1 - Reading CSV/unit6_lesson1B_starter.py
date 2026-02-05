@@ -74,11 +74,18 @@ print(f"total xp: {total_xp}")  # 1933450
 
 # One line version
 top_player = max(players, key=lambda player: int(player["wins"]))
-print(f"top player: {top_player["username"]} ({top_player["wins"]} wins)")
+# print(f"top player: {top_player["username"]} ({top_player["wins"]} wins)")
 # SpectralGhost (200 wins)
+print()
 
 print("=== PLAYER STATISTICS ===")
 # TODO: Print all statistics
+print(f"total players: {total_players}")  # 48
+print(f"total gold: {total_gold}")  # 584420
+print(f"top player: {top_player["username"]} ({top_player["wins"]} wins)")
+# SpectralGhost (200 wins)
+print(f"average xp: {avg_xp}")  # 40280.208333333336
+print()
 
 
 # =============================================================================
@@ -97,29 +104,48 @@ print("=== PLAYER STATISTICS ===")
 # 1. Load function
 def load_players(filename):
     # TODO: Load and return list of players
-    pass
+    players = []
+    with open(filename, "r") as file:
+        # reader = csv.DictReader(file)
+        # for row in reader:
+        #     players.appened(row)
+        return list(csv.DictReader(file))
 
 
 # 2. Find function
 def find_player(players, username):
     # TODO: Loop through players
-    # TODO: Return player if username matches (case-insensitive)
+    for player in players:
+        # TODO: Return player if username matches (case-insensitive)
+        if player["username"].lower() == username.lower():
+            return player
     # TODO: Return None if not found
-    pass
+    return None
 
 
 # 3. Main program
 players = load_players("players.csv")
-# print("=== PLAYER LOOKUP ===")
+print(players)
+print("=== PLAYER LOOKUP ===")
 
-# while True:
-#     search = input("Enter username (or 'quit'): ")
-#     # TODO: Check for quit
-
-#     # TODO: Search for player
-
-#     # TODO: Display results or "not found"
-#     pass
+while True:
+    search = input("Enter username (or 'quit'): ")
+    # TODO: Check for quit
+    if search.lower() == "quit":
+        print("Goodbye!")
+        break
+    # TODO: Search for player
+    player = find_player(players, search)
+    # TODO: Display results or "not found"
+    if player:
+        print(f"\nFound Player:")
+        print(f"Username: {player["username"]}")
+        print(f"Level: {player["level"]}")
+        print(f"Xp: {player["xp"]}")
+        print(f"Gold: {player["gold"]}")
+        print(f"Wins: {player["wins"]}")
+    else:
+        print(f"\nPlayer '{search}' not found")
 
 
 # =============================================================================
