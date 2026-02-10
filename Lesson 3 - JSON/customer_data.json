@@ -1,0 +1,37 @@
+[
+    {
+        "customer_id": "C001",
+        "name": "Acme Corp",
+        "total_spent": 45000,
+        "industry": "Manufacturing",
+        "account_manager": "Jennifer Martinez"
+    },
+    {
+        "customer_id": "C002",
+        "name": "TechStart Inc",
+        "total_spent": 72000,
+        "industry": "Technology",
+        "account_manager": "Michael Chen"
+    },
+    {
+        "customer_id": "C003",
+        "name": "Global Ltd",
+        "total_spent": 38000,
+        "industry": "Consulting",
+        "account_manager": "Sarah Johnson"
+    },
+    {
+        "customer_id": "C004",
+        "name": "Innovation Hub",
+        "total_spent": 55000,
+        "industry": "Technology",
+        "account_manager": "David Kim"
+    },
+    {
+        "customer_id": "C005",
+        "name": "Prime Retail Co",
+        "total_spent": 61000,
+        "industry": "Retail",
+        "account_manager": "Emily Rodriguez"
+    }
+]
