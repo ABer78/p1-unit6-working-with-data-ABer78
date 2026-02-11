@@ -67,17 +67,30 @@ print()
 # =============================================================================
 # Practice with json.loads() and json.dumps()
 
+import json
+
 # Parse this JSON string from an "API response"
 api_response = '{"status": "success", "revenue": 45000, "customers": 127}'
 
 # YOUR CODE HERE:
 # 1. Parse the string into a Python dictionary
+data = json.load(api_response)  # converts to dictionary
+# print(type(data))
 
+import requests
+
+url = "https://jsonplaceholdertyp1code.com/todos/1"
+response = requests.get(url)  # if successful we get 200 status code
+response_data = response.json()  # converts json string to dictionary
+print(f"{type(response_data)}")
 
 # 2. Print the revenue
-
+print(f"Revenue: ${data.get("revenue", 0)}")
 
 # 3. Convert back to a formatted JSON string
+formatted_json = json.dumps(data, indent=4)
+print("Formatted string")
+print(formatted_json)
 
 
 # =============================================================================
@@ -94,9 +107,9 @@ company = {
 
 # YOUR CODE HERE:
 # 1. Print the city
-
+print(f"City: {company["location"]["city"]}")  # San Francisco
 
 # 2. Print the first department
-
+print(f"Department: {company["departments"][1]}")
 
 # 3. Save this to "company_info.json"

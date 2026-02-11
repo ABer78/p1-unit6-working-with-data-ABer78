@@ -1,0 +1,20 @@
+[
+    {
+        "id": "P001",
+        "name": "Wireless Mouse",
+        "price": 29.99,
+        "category": "Electronics"
+    },
+    {
+        "id": "P002",
+        "name": "USB Cable",
+        "price": 12.99,
+        "category": "Accessories"
+    },
+    {
+        "id": "P003",
+        "name": "Laptop Stand",
+        "price": 45.0,
+        "category": "Furniture"
+    }
+]
