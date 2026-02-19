@@ -3,7 +3,7 @@
 #  Unit 6, Lesson 6
 # ============================================================
 
-import requests
+import requests, time
 
 
 # ============================================================
@@ -47,7 +47,7 @@ def get_stock_info(symbol):
         #       response = requests.get(url, params=params, timeout=10)
         url = "https://www.alphavantage.co/query"
         params = {"function": "GLOBAL_QUOTE", "symbol": symbol, "apikey": API_KEY}
-        response = requests.get(url, params=params, timeout=10)
+        response = requests.get(url, params=params, timeout=5)
 
         # TODO 3: Check the response and return the data
         #   - If status_code is 200:
@@ -59,8 +59,12 @@ def get_stock_info(symbol):
         #   Hint:
         #       data = response.json()
         #       quote = data.get("Global Quote", {})
-
-        pass  # Remove this line once you add your return statement
+        if response.status_code == 200:
+            data = response.json()
+            quote = data.get("Global Quote", {})
+            if quote:
+                return quote
+        return None
 
     except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
         print("Network error — check your internet connection.")
@@ -192,7 +196,10 @@ def compare_stocks():
     print(f"\nFetching data for {symbol1.upper()} and {symbol2.upper()}...")
 
     quote1 = get_stock_info(symbol1)
+    time.sleep(6)
     quote2 = get_stock_info(symbol2)
+    print(quote1)
+    print(quote2)
 
     if quote1 and quote2:
         display_comparison(quote1, symbol1, quote2, symbol2)
