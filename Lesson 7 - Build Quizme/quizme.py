@@ -18,13 +18,13 @@ import requests
 import json
 import csv
 import os
-import sys           # needed for PyInstaller path handling
+import sys  # needed for PyInstaller path handling
 from datetime import datetime
 
 # ============================================================
 # YOUR API KEY (REQUIRED)
 # ============================================================
-API_KEY = "REPLACE_WITH_YOUR_KEY"
+API_KEY = "AIzaSyB5yFL-QJK3Kk_ov5CSabY6EPQykj8nhjk"
 
 URL = (
     "https://generativelanguage.googleapis.com"
@@ -35,6 +35,7 @@ URL = (
 # ============================================================
 # STEP 0: HANDLE PATHS FOR PYINSTALLER
 # ============================================================
+
 
 def get_base_dir():
     """
@@ -49,9 +50,11 @@ def get_base_dir():
         # Running as normal .py script
         return os.path.dirname(os.path.abspath(__file__))
 
+
 # ============================================================
 # STEP 1: GET STUDY NOTES FROM THE USER
 # ============================================================
+
 
 def get_notes():
     """
@@ -69,9 +72,11 @@ def get_notes():
 
     return "\n".join(lines)
 
+
 # ============================================================
 # STEP 2: GENERATE QUIZ USING GEMINI
 # ============================================================
+
 
 def generate_quiz(notes, num_questions=3):
     """
@@ -123,9 +128,11 @@ Only the JSON array. No extra text.
         print("Error generating quiz:", e)
         return None
 
+
 # ============================================================
 # STEP 3: RUN THE QUIZ
 # ============================================================
+
 
 def run_quiz(questions):
     """
@@ -164,23 +171,27 @@ def run_quiz(questions):
         choice_d = q["choices"][3][3:]
 
         # Store detailed result for this question
-        results.append({
-            "question": q["question"],
-            "choice_a": choice_a,
-            "choice_b": choice_b,
-            "choice_c": choice_c,
-            "choice_d": choice_d,
-            "user_answer": user_answer,
-            "correct_answer": correct_answer,
-            "result": "Correct" if is_correct else "Wrong"
-        })
+        results.append(
+            {
+                "question": q["question"],
+                "choice_a": choice_a,
+                "choice_b": choice_b,
+                "choice_c": choice_c,
+                "choice_d": choice_d,
+                "user_answer": user_answer,
+                "correct_answer": correct_answer,
+                "result": "Correct" if is_correct else "Wrong",
+            }
+        )
 
     print(f"\nScore: {score}/{total} ({score / total * 100:.0f}%)")
     return score, total, results
 
+
 # ============================================================
 # STEP 4: SAVE RESULTS TO CSV
 # ============================================================
+
 
 def save_score(score, total, results):
     """
@@ -207,8 +218,8 @@ def save_score(score, total, results):
                 "result",
                 "score",
                 "total",
-                "percent"
-            ]
+                "percent",
+            ],
         )
 
         # Write header only once
@@ -217,26 +228,30 @@ def save_score(score, total, results):
 
         # Write one row per question
         for r in results:
-            writer.writerow({
-                "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
-                "question": r["question"],
-                "choice_a": r["choice_a"],
-                "choice_b": r["choice_b"],
-                "choice_c": r["choice_c"],
-                "choice_d": r["choice_d"],
-                "user_answer": r["user_answer"],
-                "correct_answer": r["correct_answer"],
-                "result": r["result"],
-                "score": score,
-                "total": total,
-                "percent": f"{score / total * 100:.0f}%"
-            })
+            writer.writerow(
+                {
+                    "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                    "question": r["question"],
+                    "choice_a": r["choice_a"],
+                    "choice_b": r["choice_b"],
+                    "choice_c": r["choice_c"],
+                    "choice_d": r["choice_d"],
+                    "user_answer": r["user_answer"],
+                    "correct_answer": r["correct_answer"],
+                    "result": r["result"],
+                    "score": score,
+                    "total": total,
+                    "percent": f"{score / total * 100:.0f}%",
+                }
+            )
 
     print("📊 Detailed results saved to", file_path)
+
 
 # ============================================================
 # STEP 5: MAIN PROGRAM FLOW
 # ============================================================
+
 
 def main():
     print("🧠 QuizMe — AI Quiz Generator")
@@ -256,6 +271,7 @@ def main():
 
     score, total, results = run_quiz(questions)
     save_score(score, total, results)
+
 
 # ============================================================
 # PROGRAM ENTRY POINT

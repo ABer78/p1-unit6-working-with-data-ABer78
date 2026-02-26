@@ -6,15 +6,17 @@ API_KEY = "AIzaSyB5yFL-QJK3Kk_ov5CSabY6EPQykj8nhjk"
 # TODO: Construct the API endpoint URL piece by piece
 # ============================================================
 # Base URL for Google's Gemini API https://generativelanguage.googleapis.com
-base_url = ""
+base_url = "https://generativelanguage.googleapis.com"
 # Model name (gemini-2.5-flash is fast and free-tier friendly)
-model = ""
+model = "gemini-2.5-flash"
 # Action (we want to generate content)
-action = ""
+action = "generateContent"
 # Combine everything and append your API key as a query parameter
 # Hint: use an f-string: f"{base_url}/v1beta/models/{model}:{action}?key={API_KEY}"
 
-url = ""  # <-- Build the URL here
+url = (
+    f"{base_url}/v1beta/models/{model}:{action}?key={API_KEY}"  # <-- Build the URL here
+)
 
 
 def test_prompt(prompt_text):
@@ -24,11 +26,11 @@ def test_prompt(prompt_text):
     # TODO: Create the request body
     # It should be a dictionary with "contents" -> list containing a dict
     # with "parts" -> list containing a dict with "text" = prompt_text
-    body = {}
+    body = {"contents": [{"parts": [{"text": prompt_text}]}]}
 
     try:
         # TODO: Make the POST request (include a timeout of 30 seconds)
-        response = None  # <-- Replace with requests.post(...)
+        response = requests.post(url, json=body, timeout=30)
 
         # Check if the request was successful
         if response.status_code != 200:
@@ -39,7 +41,7 @@ def test_prompt(prompt_text):
         # TODO: Parse the JSON response and extract the text
         data = response.json()
         # The response structure: data["candidates"][0]["content"]["parts"][0]["text"]
-        text = ""  # <-- Extract the text
+        text = data["candidates"][0]["content"]["parts"][0]["text"]
 
         print("\n--- Gemini Response ---")
         print(text)
